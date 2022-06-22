@@ -6,13 +6,11 @@ import 'package:get/get.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:softagi/const.dart';
-import 'package:softagi/controller/card_data_contolloer.dart';
-import 'package:softagi/services/theme_services.dart';
+import 'package:softagi/controller/logout.dart';
+import 'package:softagi/controller/profile_controller.dart';
 import 'package:softagi/view/Screens/categories.dart';
 import 'package:softagi/view/Screens/serachscreen.dart';
 import 'package:softagi/view/widgets/cart_num.dart';
-import 'package:softagi/view/widgets/custom_button.dart';
-import 'package:softagi/view/widgets/custom_text.dart';
 import '../../theme.dart';
 import 'cart.dart';
 import 'favorites.dart';
@@ -51,12 +49,29 @@ class _bottom_navigation_barState extends State<bottom_navigation_bar> {
     // ThemeServices().switchTheme();
     //
     // },)),
+
           leading: IconButton(onPressed: () {
             Get.to(searchscreen());
           }, icon: Icon(Icons.search),),
           actions: [
+            FutureBuilder(
+              future: profileimage(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                return (snapshot.data==null)?Center(
+                  child: CircularProgressIndicator(),
+                ): CircleAvatar(
+
+                  backgroundImage:
+                  NetworkImage(snapshot.data.toString(),),
+
+
+                  radius: 20,
+                );
+
+              },),
             IconButton(
                 onPressed: () async {
+                  logout();
                   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
                   prefs.remove(keyAccessToken);
@@ -92,19 +107,20 @@ class _bottom_navigation_barState extends State<bottom_navigation_bar> {
                     // selectedItemColor: Colors.red,
                     items: <BottomNavigationBarItem>[
                       BottomNavigationBarItem(
-                          icon: Icon(Icons.home), label: 'Home'),
+                          icon: Icon(Icons.home), label: 'Home'.tr),
                       BottomNavigationBarItem(
                           icon: Icon(Icons.category_outlined),
-                          label: 'Categories'),
+                          label: 'Categories'.tr),
                       BottomNavigationBarItem(
-                          icon: Icon(Icons.favorite), label: 'Favorites'),
+                          icon: Icon(Icons.favorite), label: 'Favorites'.tr),
                       BottomNavigationBarItem(
-                          icon: Icon(Icons.settings), label: 'Settings'),
+                          icon: Icon(Icons.settings), label: 'Settings'.tr),
                       // BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
                     ]),
               ),
             );
           },
+
         ),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.miniCenterDocked,
@@ -112,11 +128,13 @@ class _bottom_navigation_barState extends State<bottom_navigation_bar> {
           height: 50,
           margin: const EdgeInsets.only(top: 10),
           child: FloatingActionButton(
-            backgroundColor: Colors.blueGrey,
+            elevation: 0,
+            backgroundColor: Colors.transparent,
             onPressed: () {
               Get.to(cartscreen());
+
             },
-            child: cart_num(),
+            child:cart_num(),
 
             // hoverElevation: 10,
             // splashColor: Colors.red,
@@ -140,16 +158,16 @@ class _bottom_navigation_barState extends State<bottom_navigation_bar> {
           borderRadius: BorderRadius.circular(25),
         ),
         elevation: 0,
-        title: Text('Are you sure?'),
-        content: Text('Do you want close The app?'),
+        title: Text('Are you sure?'.tr),
+        content: Text('Do you want close The app?'.tr),
         actions: <Widget>[
           MaterialButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text('No'),
+            child: Text('No'.tr),
           ),
           MaterialButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text('Yes'),
+            child: Text('Yes'.tr),
           ),
         ],
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:softagi/controller/add_favort.dart';
 import 'package:softagi/controller/add_or_remove%20_card_controller.dart';
 import 'package:softagi/controller/home_data_controller.dart';
 import 'package:softagi/view/widgets/custom_text.dart';
@@ -14,9 +14,11 @@ class descriptionScreen extends StatelessWidget {
   dynamic oldPrice;
   String? description;
   String? name;
+  int? id;
 
   descriptionScreen(
       {this.title,
+        this.id,
         this.image,
         this.price,
         this.oldPrice,
@@ -46,7 +48,7 @@ class descriptionScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height/3,
                 child: Hero(
 
                     tag: '$name', child: Image.network('$image')),
@@ -88,7 +90,6 @@ class descriptionScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GetBuilder<homedatacontroller>(
-                    init:  homedatacontroller(),
                     builder: ( controller) {
                       return Container(
 
@@ -96,7 +97,10 @@ class descriptionScreen extends StatelessWidget {
                           addremovecard(id: controller.products[index].id!);
                         },icon: Icon(Icons.shopping_cart_rounded,color: Colors.red[800],),iconSize: 30,),
                       );
-                    },),                  IconButton(onPressed: () {  }, icon: Icon(Icons.favorite_border_outlined),),
+                    },),                  IconButton(onPressed: () {
+                    addfavort(id:id!);
+
+                  }, icon: Icon(Icons.favorite_border_outlined),),
                 ],
               ),
               Container(

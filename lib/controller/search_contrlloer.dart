@@ -9,23 +9,54 @@ import 'package:softagi/model/profil_model.dart';
 import 'package:softagi/view/auth_container.dart';
 
 import '../const.dart';
+Future <List<modelproducts>> search() async {
 
-class Searchcontrller extends GetxController{
-  TextEditingController text = TextEditingController();
+  var url = Uri.parse('$baseURL/products/search');
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? token = prefs.get(keyAccessToken).toString();
+  var response = await http.post(url, headers: {
+    'Authorization':token,
+    "lang": "ar",
+  }, body: {
+    "text": '${text.text}',
+  }
+  );
+  print('Response Body > ${response.body}');
+  print('status code > ${response.statusCode}');
 
+  var responsebody=jsonDecode(response.body)['data']['data'];
   List<modelproducts>product=[];
+
+  // for(var i in responsebody){
+  //   modelproducts user = modelproducts(id:i['id'],image:i['image'],price:i['price'] ,name:i['name'] ,description:i['description'] ,in_cart:i['in_cart'] ,in_favorites:i['in_favorites'] ,old_price:i['old_price'] );
+  // product.add(user);
+  // }
+  for(int x=0;x<responsebody.length;x++)
+  {
+    product.add(modelproducts.fromMap(responsebody[x]));
+  }
+  return product;
+
+}
+class Searchcontrller extends GetxController{
+
+
+
   Searchcontrller(){
     search().then((value) => update());
   }
   Future search() async {
+    List<modelproducts>product=[];
+
     var url = Uri.parse('$baseURL/products/search');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.get(keyAccessToken).toString();
+    String? language= prefs.get('lang2').toString();
     var response = await http.post(url, headers: {
       'Authorization':token,
-      "lang": "ar",
+      'lang':(language!='ar')?'en':'ar',
     }, body: {
-      "text": text.text,
+      "text": '${text.text}',
     }
     );
     print('Response Body > ${response.body}');
@@ -36,6 +67,6 @@ class Searchcontrller extends GetxController{
       {
         product.add(modelproducts.fromMap(responsebody[x]));
       }
-
+    update();
   }
 }

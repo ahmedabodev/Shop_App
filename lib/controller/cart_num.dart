@@ -10,10 +10,20 @@ import 'package:softagi/model/home_data_model.dart';
 class cartnum extends GetxController{
   int? total1;
   var quantity1;
+  var cart=RxList<cartiteme>().obs;
+  var isloading = true.obs;
   RxInt? num1;
   List<cartiteme>cartit=[];
-  List<totalmodel>total=[];
   List<testproduckt>products=[];
+  int get count{
+    return cartit.length;
+  }
+  int max(){
+    int index;
+    index= cartit.length;
+    update();
+    return index;
+  }
 
   Future gethomedata1()async{
     try{

@@ -13,8 +13,10 @@ bool? state;
 Future<bool> loginApi(
     {required String email, required String password}) async {
   var url = Uri.parse('$baseURL/login');
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? language= prefs.get('lang2').toString();
   var response = await http.post(url, headers: {
-    "lang": "ar",
+    'lang':(language!='ar')?'en':'ar',
   }, body: {
     "email": email,
     "password": password
@@ -46,7 +48,6 @@ Future<bool> loginApi(
   String message = jsonDecode(response.body)['message'];
   state = jsonDecode(response.body)['status'];
   String token = jsonDecode(response.body)['data']['token'];
-  SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(keyAccessToken, token);
 
    bool status = jsonDecode(response.body)['status'];

@@ -7,8 +7,7 @@ import 'dart:convert';
 
 import 'package:softagi/model/home_data_model.dart';
 import 'package:softagi/model/profil_model.dart';
-String? image;
-String? name;
+
 class profilecontroller extends GetxController{
   List<profileemodel>profile=[];
   String? email;
@@ -24,23 +23,20 @@ class profilecontroller extends GetxController{
     try{
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.get(keyAccessToken).toString();
+      String? language= prefs.get('lang2').toString();
       print("=====tokennnnn${token}");
       var url = Uri.parse(baseURL+'/profile');
       var respone=await http.get(url,
           headers:{
-        'Authorization':token,
+            'lang':(language!='ar')?'en':'ar',
+
+            'Authorization':token,
 
           });
       email= jsonDecode(respone.body)['data']['email'];
       name= jsonDecode(respone.body)['data']['name'];
       image= jsonDecode(respone.body)['data']['image'];
-
-
-      print(email);
-      // for (var i in responebody) {
-      //   profileemodel art = profileemodel(email:i['email'] );
-      //   profile.add(art);
-      // }
+      update();
     }catch(e){
       print('error=<<<<<$e');
     }
@@ -49,3 +45,68 @@ class profilecontroller extends GetxController{
 
 }
 
+Future <String> profileemail()async{
+
+    String? email;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.get(keyAccessToken).toString();
+    String? language= prefs.get('lang2').toString();
+    print("=====tokennnnn${token}");
+    var url = Uri.parse(baseURL+'/profile');
+    var respone=await http.get(url,
+        headers:{
+          'lang':(language!='ar')?'en':'ar',
+
+          'Authorization':token,
+
+        });
+    email= jsonDecode(respone.body)['data']['email'];
+
+
+return email! ;
+
+}
+Future <String> profilename()async{
+
+
+  String? name;
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? token = prefs.get(keyAccessToken).toString();
+  String? language= prefs.get('lang2').toString();
+  print("=====tokennnnn${token}");
+  var url = Uri.parse(baseURL+'/profile');
+  var respone=await http.get(url,
+      headers:{
+        'lang':(language!='ar')?'en':'ar',
+
+        'Authorization':token,
+
+      });
+  name= jsonDecode(respone.body)['data']['name'];
+
+  return name! ;
+
+}
+Future <String> profileimage()async{
+
+
+  String? image;
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? token = prefs.get(keyAccessToken).toString();
+  String? language= prefs.get('lang2').toString();
+  print("=====tokennnnn${token}");
+  var url = Uri.parse(baseURL+'/profile');
+  var respone=await http.get(url,
+      headers:{
+        'lang':(language!='ar')?'en':'ar',
+
+        'Authorization':token,
+
+      });
+
+  image= jsonDecode(respone.body)['data']['image'];
+
+  return image! ;
+
+}

@@ -15,8 +15,8 @@ class register extends StatelessWidget {
   String? name,
       phone,
       email,
-      password,
-      image = 'https://student.valuxapps.com/storage/assets/defaults/user.jpg';
+      password;
+  String image='';
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class register extends StatelessWidget {
         child: Center(
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
                 // Container(
                 //   margin: const EdgeInsetsDirectional.only(start: 15,),
@@ -61,6 +61,7 @@ class register extends StatelessWidget {
                       padding:
                           const EdgeInsetsDirectional.only(start: 15, end: 10),
                       child: Column(
+crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(
                             height: 20,
@@ -74,11 +75,10 @@ class register extends StatelessWidget {
                             height: 20,
                           ),
                           Container(
-                              alignment: Alignment.topLeft,
                               padding:
                                   const EdgeInsetsDirectional.only(end: 15),
                               child: custom_text(
-                                text: 'Name : ',
+                                text: 'Name:',
                                 style: titlestyle,
                               )),
                           Row(
@@ -94,23 +94,22 @@ class register extends StatelessWidget {
                                     },
                                     validator: (value) {
                                       if (value.isEmpty) {
-                                        return 'Please Enter Your Name';
+                                        return 'Please Enter Your Name'.tr;
                                       } else {
                                         return null;
                                       }
                                     },
-                                    hint: 'Enter your Name',
+                                    hint: 'Enter your Name'.tr,
                                   ),
                                 ),
                               ),
                             ],
                           ),
                           Container(
-                              alignment: Alignment.topLeft,
                               padding:
                                   const EdgeInsetsDirectional.only(end: 15),
                               child: custom_text(
-                                text: 'Phone : ',
+                                text: 'Phone:',
                                 style: titlestyle,
                               )),
                           Row(
@@ -130,18 +129,17 @@ class register extends StatelessWidget {
                                       if (value.length < 11 ||
                                           value.length > 11 ||
                                           value.isEmpty) {
-                                        return 'Please Enter Your Write Phone Number';
+                                        return 'Please Enter Your correct Phone '.tr;
                                       } else
                                         return null;
                                     },
-                                    hint: 'Enter your Phone',
+                                    hint: 'Enter your Phone'.tr,
                                   ),
                                 ),
                               ),
                             ],
                           ),
                           Container(
-                              alignment: Alignment.topLeft,
                               padding:
                                   const EdgeInsetsDirectional.only(end: 15),
                               child: custom_text(
@@ -163,23 +161,22 @@ class register extends StatelessWidget {
                                       if (value.isEmpty ||
                                           !(value.contains('@')) ||
                                           !(value.contains('.com'))) {
-                                        return 'Please Enter you correct Email';
+                                        return 'Please Enter you correct Email'.tr;
                                       } else {
                                         return null;
                                       }
                                     },
-                                    hint: 'Enter your Email',
+                                    hint: 'Enter your Email'.tr,
                                   ),
                                 ),
                               ),
                             ],
                           ),
                           Container(
-                              alignment: Alignment.topLeft,
                               padding:
                                   const EdgeInsetsDirectional.only(end: 15),
                               child: custom_text(
-                                text: 'Password : ',
+                                text: 'Password:',
                                 style: titlestyle,
                               )),
                           Row(
@@ -194,12 +191,12 @@ class register extends StatelessWidget {
                                       password = value;
                                     },
                                     keyboardType: TextInputType.text,
-                                    hintText: 'Enter your Password',
+                                    hintText: 'Enter your Password'.tr,
                                     validator: (value) {
                                       if (value.isEmpty ||
                                           value.length < 3 ||
                                           value.length > 16) {
-                                        return 'Please Enter a correct password';
+                                        return 'Please Enter your correct password'.tr;
                                       } else {
                                         return null;
                                       }
@@ -212,7 +209,12 @@ class register extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
+                          CameraScreen(),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           Container(
+                            alignment: Alignment.center,
                             child: custom_button(
                                 backgroundColor: Colors.red,
                                 textColor: Colors.white,
@@ -222,6 +224,7 @@ class register extends StatelessWidget {
                                     registerApi(
                                             email: email!,
                                             name: name!,
+                                            image: base64Image,
                                             password: password!,
                                             phone: phone!)
                                         .then((value) {
@@ -235,6 +238,7 @@ class register extends StatelessWidget {
                                   text: 'Register Now',
                                 )),
                           ),
+
                           const SizedBox(
                             height: 30,
                           ),

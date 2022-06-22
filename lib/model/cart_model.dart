@@ -1,29 +1,24 @@
 class totalmodel{
-  var total;
-  var sub_total;
-
+  dynamic total;
   totalmodel({
     required this.total,
-    required this.sub_total,
   });
-
   Map<String, dynamic> toMap() {
     return {
       'total': this.total,
-      'sub_total': this.sub_total,
     };
   }
 
   factory totalmodel.fromMap(Map<String, dynamic> map) {
     return totalmodel(
-      total: map['total'] ,
-      sub_total: map['sub_total'] ,
+      total: map['total'] as dynamic,
     );
-  } //
+  }
+
 
 }
 class cartiteme{
-  dynamic id;
+  dynamic  id;
   dynamic quantity;
   testproduckt? product;
 
@@ -37,7 +32,7 @@ class cartiteme{
     return {
       'id':this.id,
       'quantity': this.quantity,
-      'pro': this.product,
+      'product': this.product,
     };
   }
 
@@ -85,14 +80,14 @@ class testproduckt{
 
   factory testproduckt.fromMap(Map<String, dynamic> map) {
     return testproduckt(
-      id: map['id'] as dynamic,
-      name: map['name'] as dynamic,
-      image: map['image'] as dynamic,
-      description: map['description'] as dynamic,
-      old_price: map['old_price'] as dynamic,
-      price: map['price'] as dynamic,
-      in_favorites: map['in_favorites'] as dynamic,
-      in_cart: map['in_cart'] as dynamic,
+      id: map['id'],
+      name: map['name'] ,
+      image: map['image'] ,
+      description: map['description'],
+      old_price: map['old_price'] ,
+      price: map['price'] ,
+      in_favorites: map['in_favorites'] ,
+      in_cart: map['in_cart'] ,
     );
   }
 }

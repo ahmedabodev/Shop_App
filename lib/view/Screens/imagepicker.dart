@@ -4,15 +4,14 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:image_picker/image_picker.dart';
 
+import '../../const.dart';
+
 class CameraScreen extends StatefulWidget {
-  var base64Image;
 
   @override
   _CameraScreenState createState() => _CameraScreenState();
 
-  CameraScreen({
-    required this.base64Image,
-  });
+
 }
 
 class _CameraScreenState extends State<CameraScreen> {
@@ -63,9 +62,9 @@ class _CameraScreenState extends State<CameraScreen> {
         // print(imageBytes);
         // base64Image = base64UrlEncode(imageBytes);
         List<int> imageBytes = imageFile!.readAsBytesSync();
-        widget.base64Image = base64Encode(imageBytes);
+        base64Image = base64Encode(imageBytes);
         print(" code=>>${imageBytes}");
-        print(" code=>>${widget.base64Image}");
+        print(" code=>>${base64Image}");
         // updatimge(base64Image, id);
       });
     }
@@ -85,8 +84,8 @@ class _CameraScreenState extends State<CameraScreen> {
         // print("dddd$imageBytes");
         // base64Image = base64UrlEncode(imageBytes);
         List<int> imageBytes = imageFile!.readAsBytesSync();
-        widget.base64Image = base64Encode(imageBytes);
-        print(widget.base64Image);
+        base64Image = base64Encode(imageBytes);
+        print(base64Image);
 
         // updatimge(base64Image, id);
       });
@@ -106,9 +105,9 @@ class _CameraScreenState extends State<CameraScreen> {
               image:  FileImage(imageFile!),
               fit: BoxFit.cover,
             ),
-            border: Border.all(color: Colors.black, width: 0.05),
+            // border: Border.all(color: Colors.black, width: 0.05),
             borderRadius:
-            const  BorderRadius.all( Radius.circular(10.0)),
+              BorderRadius.circular(20),
           ),
         ),
         IconButton(onPressed: (){

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:softagi/const.dart';
 import 'package:http/http.dart'as http;
 import 'package:softagi/model/category_model.dart';
@@ -17,7 +18,11 @@ class categoriescontroller extends GetxController{
     try{
 
       var url = Uri.parse(baseURL+'/categories');
-      var respone=await http.get(url);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? language= prefs.get('lang2').toString();
+      var respone=await http.get(url,headers:{
+        'lang':(language!='ar')?'en':'ar',
+      });
       var responebody=jsonDecode(respone.body)['data']['data'];
       print('responebody:>>>>>$responebody');
       print(respone.statusCode);

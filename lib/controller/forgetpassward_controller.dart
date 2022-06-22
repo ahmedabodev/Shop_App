@@ -11,8 +11,10 @@ bool? state;
 Future<bool> forgetpasswardapi(
     {required String email}) async {
   var url = Uri.parse('$baseURL/verify-email');
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? language= prefs.get('lang2').toString();
   var response = await http.post(url, headers: {
-    "lang": "ar",
+    'lang':(language!='ar')?'en':'ar',
   }, body: {
     "email": email,
   });

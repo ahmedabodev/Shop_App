@@ -2,25 +2,30 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:softagi/const.dart';
 Future<bool> registerApi(
     {
-    required String name,
+      required String image,
+      required String name,
     required String phone,
     required String email,
     required String password}) async
 {
   var url = Uri.parse('$baseURL/register');
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? language= prefs.get('lang2').toString();
   var response= await http.post(url,
   headers: {
-    'lang' : 'ar'
+    'lang':(language!='ar')?'en':'ar',
   },
     body:{
     'name' : name,
     'phone' : phone,
     'email' : email,
     'password' : password,
+      'image':image,
 
     }
   );

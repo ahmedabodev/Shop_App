@@ -5,7 +5,7 @@ import 'package:softagi/theme.dart';
 import 'package:softagi/view/widgets/custom_text.dart';
 
 class categories extends StatelessWidget {
-final GetxController controller =Get.put(categoriescontroller());
+final GetxController c =Get.put(categoriescontroller(),permanent: true);
   @override
   Widget build(BuildContext context) {
     return GetBuilder<categoriescontroller>(

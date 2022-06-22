@@ -117,7 +117,7 @@ TextStyle get newprice {
     textStyle:  TextStyle(
         color:Get.isDarkMode?Colors.deepOrange:Colors.deepOrange,
         fontWeight: FontWeight.w900,
-        fontSize: 20,
+        fontSize: 18,
 
 
     ),
@@ -131,7 +131,18 @@ TextStyle get oldprice {
         decoration: TextDecoration.lineThrough,
         color:Get.isDarkMode?Colors.grey:Colors.grey,
         fontWeight: FontWeight.bold,
-      fontSize: 20,
+      fontSize: 18,
+
+    ),
+  );
+
+}
+TextStyle get dis {
+  return GoogleFonts.lato(
+    textStyle:  TextStyle(
+      color:Get.isDarkMode?Colors.blueGrey:Colors.blueGrey,
+      fontWeight: FontWeight.bold,
+      fontSize: 18,
 
     ),
   );

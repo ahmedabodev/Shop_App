@@ -48,7 +48,7 @@ class forgetpassward extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: custom_text(
-                        text:'Enter Your Email:',
+                        text:'Enter your Email',
                         style: titlestyle,
                       ),
                     ),
@@ -68,7 +68,7 @@ class forgetpassward extends StatelessWidget {
                           if (value.isEmpty ||
                               !(value.contains('@')) ||
                               !(value.contains('.com'))) {
-                            return 'Please Enter you correct Email';
+                            return 'Please Enter your correct Email'.tr;
                           } else {
                             return null;
                           }
@@ -76,14 +76,14 @@ class forgetpassward extends StatelessWidget {
                         onSaved: (value) {
                           email = value;
                         },
-                        hint: 'Email',
+                        hint: 'Email'.tr,
                       ),
                     ),
                     Container(
                       alignment: Alignment.center,
                       child: custom_button(
                         backgroundColor: Colors.red,
-                        child: Text('Verify Email'),
+                        child: custom_text(text: 'Verify Email',),
                         onPressed: (){
                           _formKey.currentState?.save();
                           if (_formKey.currentState!.validate()) {
